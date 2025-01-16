@@ -1,29 +1,37 @@
--- You need 7 alts for this
--- replace the YourAltRobloxUsernameTorso, YourAltRobloxUsernameSecondTorso, YourAltRobloxUsernameHead, YourAltRobloxUsernameRightArm, YourAltRobloxUsernameLeftArm, YourAltRobloxUsernameRightLeg, YourAltRobloxUsernameLeftLeg to your alt accounts.
+-- Replace these with your alt usernames
+local altUsernames = {
+	Head = "YourAltRobloxUsername", -- Your Head
+	Torso = "YourAltRobloxUsername", -- Your Torso
+	SecondTorso = "YourAltRobloxUsername", -- Your Second Torso
+	RightArm = "YourAltRobloxUsername", -- Your Right Arm
+	LeftArm = "YourAltRobloxUsername", -- Your Left Arm
+	RightLeg = "YourAltRobloxUsername", -- Your Right Leg
+	LeftLeg = "YourAltRobloxUsername" -- Your Left Leg
+}
 
 
-game.Workspace.YourAltRobloxUsernameTorso.Humanoid.HipHeight = 5 -- Your torso
-game.Workspace.YourAltRobloxUsernameSecondTorso.Humanoid.HipHeight = 5 -- Your Second torso
-game.Workspace.YourAltRobloxUsernameHead.Humanoid.HipHeight = 6 -- Your Head
-game.Workspace.YourAltRobloxUsernameRightArm.Humanoid.HipHeight = 5 -- Your Right Arm
-game.Workspace.YourAltRobloxUsernameLeftArm.Humanoid.HipHeight = 5 -- Your Left Arm
+game.Workspace[altUsernames.Torso].Humanoid.HipHeight = 5
+game.Workspace[altUsernames.SecondTorso].Humanoid.HipHeight = 5
+game.Workspace[altUsernames.Head].Humanoid.HipHeight = 6
+game.Workspace[altUsernames.RightArm].Humanoid.HipHeight = 5
+game.Workspace[altUsernames.LeftArm].Humanoid.HipHeight = 5
 
 local mechParts = {
-	workspace.YourAltRobloxUsernameTorso, -- Your Torso
-	workspace.YourAltRobloxUsernameSecondTorso, -- Your Second Torso
-	workspace.YourAltRobloxUsernameLeftLeg, -- Your Left Leg
-	workspace.YourAltRobloxUsernameRightLeg, -- Your Right Leg
-	workspace.YourAltRobloxUsernameRightArm, -- Your Right Arm
-	workspace.YourAltRobloxUsernameLeftArm, -- Your Left Arm
+	workspace[altUsernames.Torso],
+	workspace[altUsernames.SecondTorso],
+	workspace[altUsernames.LeftLeg],
+	workspace[altUsernames.RightLeg],
+	workspace[altUsernames.RightArm],
+	workspace[altUsernames.LeftArm]
 }
 
 local attachments = {
-	{redBlock = workspace.YourAltRobloxUsernameTorso.HumanoidRootPart, blueCube = workspace.YourAltRobloxUsernameHead.Torso, offset = CFrame.new(-1, -1, 0)},
-	{redBlock = workspace.YourAltRobloxUsernameSecondTorso.HumanoidRootPart, blueCube = workspace.YourAltRobloxUsernameHead.Torso, offset = CFrame.new(1, -1, 0)},
-	{redBlock = workspace.YourAltRobloxUsernameLeftLeg.HumanoidRootPart, blueCube = workspace.YourAltRobloxUsernameHead["Left Leg"], offset = CFrame.new(-0.5, -4, 0)},
-	{redBlock = workspace.YourAltRobloxUsernameRightLeg.HumanoidRootPart, blueCube = workspace.YourAltRobloxUsernameHead["Right Leg"], offset = CFrame.new(0.5, -4, 0)},
-	{redBlock = workspace.YourAltRobloxUsernameRightArm.HumanoidRootPart, blueCube = workspace.YourAltRobloxUsernameHead["Right Arm"], offset = CFrame.new(1.5, -1, 0)},
-	{redBlock = workspace.YourAltRobloxUsernameLeftArm.HumanoidRootPart, blueCube = workspace.YourAltRobloxUsernameHead["Left Arm"], offset = CFrame.new(-1.5, -1, 0)},
+	{redBlock = workspace[altUsernames.Torso].HumanoidRootPart, blueCube = workspace[altUsernames.Head].Torso, offset = CFrame.new(-1, -1, 0)},
+	{redBlock = workspace[altUsernames.SecondTorso].HumanoidRootPart, blueCube = workspace[altUsernames.Head].Torso, offset = CFrame.new(1, -1, 0)},
+	{redBlock = workspace[altUsernames.LeftLeg].HumanoidRootPart, blueCube = workspace[altUsernames.Head]["Left Leg"], offset = CFrame.new(-0.5, -4, 0)},
+	{redBlock = workspace[altUsernames.RightLeg].HumanoidRootPart, blueCube = workspace[altUsernames.Head]["Right Leg"], offset = CFrame.new(0.5, -4, 0)},
+	{redBlock = workspace[altUsernames.RightArm].HumanoidRootPart, blueCube = workspace[altUsernames.Head]["Right Arm"], offset = CFrame.new(1.5, -1, 0)},
+	{redBlock = workspace[altUsernames.LeftArm].HumanoidRootPart, blueCube = workspace[altUsernames.Head]["Left Arm"], offset = CFrame.new(-1.5, -1, 0)}
 }
 
 local function applyZeroGravity()
@@ -50,25 +58,6 @@ local function updateAttachments()
 				redBlock.CFrame = redBlock.CFrame:Lerp(desiredCFrame, 0.2)
 			else
 				warn("Failed to attach parts: Missing redBlock or blueCube")
-			end
-		end
-		wait(0.02)
-	end
-end
-
-local function makeMechFollowHumanoid()
-	while true do
-		local humanoid = workspace.PartMechTorso:FindFirstChild("Humanoid")
-		if humanoid then
-			local humanoidRoot = humanoid.Parent:FindFirstChild("HumanoidRootPart")
-			if humanoidRoot then
-				for _, mechPart in ipairs(mechParts) do
-					for _, part in ipairs(mechPart:GetChildren()) do
-						if part:IsA("BasePart") then
-							part.CFrame = part.CFrame:Lerp(humanoidRoot.CFrame, 0.3)
-						end
-					end
-				end
 			end
 		end
 		wait(0.02)
@@ -104,5 +93,4 @@ end
 
 applyZeroGravity()
 updateAttachments()
-makeMechFollowHumanoid()
 flyMechParts()
